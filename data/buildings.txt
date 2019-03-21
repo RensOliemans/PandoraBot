@@ -1,0 +1,58 @@
+Nr	Dutch Name	Afkorting	Literal Translation	Explanation
+48	Bastille	BA	Bastille	Historical French Prison
+63	Blokhutten	BL	Log Cabins
+32	BMC	BI	BMC
+62	Boerderij	BB	Bosch	Farm Bosch
+53	Box	BO	Box
+66	BTC	BTC	BTC
+29	Buitenhorst	BH	Outer Horst
+4	Carillon	CN	Carillon
+15	Carré	CR	Carré	Well known Dutch theatre
+44	Drienerburght	DR	Stronghold Driener
+40	Erve Holzik	ER	Compound Holzik
+42	Faculty Club	FC	Faculty Club
+17	The Gallery	DY	The Gallery
+5	Garage	GA	Garage
+13	Hal B	HB	Hall B
+9	Citadel	CI	Citadel	Fortified core defense area in a town
+46	High Tech Factory	HTF	High Tech Factory
+8	Hogedruklab	HD	High Pressure Lab
+45	Hogekamp	HO	High Camp
+21	Horstring	HR	Ring of Horst
+20	Horsttoren	HTF	Tower of Horst
+75	ICT	ITC	ICT
+30	Keet	KT	Shed
+41	Cubicus	CU	Cubicus
+23	Kleinhorst	KH	Little Horst
+61	Linde	LI	Linden Tree
+65	Logica	LO	Logic
+27	Meander	ME	Meander
+59	Mondriaan	MO	Mondriaan
+16	Nanolab	NL	Nano Lab
+24	Noordhoorst	NH	Horst North
+0	O&O plein	OO	O&O square	O&O stands for Education & Research
+26	Oosthorst	OH	Horst East
+56	Openluchttheather	OUT	Outdoor Theatre
+6	Paviljoen	PA	Pavillion
+10	Ravelijn	RA	Ravelin	Triangular fortification on a fortress
+43	Schuur	SR	Barn
+7	Seinhuis	SH	Signal Box	Used for switching train tracks
+51	Sky	SK	Sky
+58	Sleutel	SL	Key
+2	Spiegel	SP	Mirror
+49	Sportcentrum	SC	Sport Center
+63	Stall	ST	Stall
+18	Technohal	TL	Techno Hall
+14	Teehuis	TH	Tee House	Tea House (misspelling is intentional)
+64	Tennispark	TP	Tennis Grounds
+69	Therm	TM	Therm
+39	Trial-terrein	TT	Trial Grounds	Terrain for a motorcycle discipline
+3	Vleugel	VL	Wing
+60	Vlinder	VI	Butterfly
+47	Vrijhof	VR	Leisure Courtyard
+12	Waaier	WA	Handheld Folding Fan
+22	Westhorst	WH	Horst West
+31	Windpark	WP	Wind Farm
+11	Zilverling	ZI	Silver Coin
+28	Zuidhorst	ZH	Horst South
+57	Zwembad	ZW	Pool
