@@ -17,13 +17,11 @@ class Puzzles(TelegramModule):
 
         self.respond('Gebouwnummer %s komt overeen met gebouw %s.' % (number, building.name))
 
-    def location(self, length):
+    @command
+    def locations(self, length):
         """
         Geeft een lijst met alle locaties die een specifieke lengte hebben
         """
         results = util.location_by_length(length)
         self.respond('Er zijn %i resultaten met lengte %s' % (len(results), length))
-        self.respond(' '.join([x.name for x in results]))
-
-    #Aliases
-    gebouw = building
+        self.respond(', '.join([x.name for x in results]))
