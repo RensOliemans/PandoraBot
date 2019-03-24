@@ -1,12 +1,22 @@
 import inspect
 import logging
 
-from telegram.ext import CommandHandler
+from telegram.ext import CommandHandler, MessageHandler, Filters
 from config.telegram import dispatcher
 
 
 def command(func):
     func.is_command = True
+    return func
+
+
+def photo(func):
+    func.filter = Filters.photo
+    return func
+
+
+def location(func):
+    func.filter = Filters.location
     return func
 
 
@@ -24,7 +34,7 @@ class TelegramModuleMeta(type):
                                          'self')
                     argspec = argspec[1:]
 
-                    def wrapper(bot, update, user_data={}, args=[]):
+                    def wrapper(bot, update, user_data=None, args=[]):
                         ins = x(context=user_data, update=update, bot=bot)
                         if len(argspec) != len(args):
                             logging.debug('Command called with invalid argument count')
@@ -42,6 +52,18 @@ class TelegramModuleMeta(type):
                 handler = CommandHandler(name, getattr(x, name), pass_user_data=True,
                                          pass_args=True)
                 dispatcher.add_handler(handler)
+            elif hasattr(method, 'filter'):
+                def get_wrapper(func):
+                    def wrapper(bot, update, user_data=None):
+                        ins = x(context=user_data, update=update, bot=bot)
+                        func(ins)
+                    wrapper.original = func
+                    return wrapper
+                setattr(x, name, get_wrapper(method))
+                handler = MessageHandler(method.filter, getattr(x, name),
+                                         pass_user_data=True, edited_updates=True)
+                dispatcher.add_handler(handler)
+
         return x
 
     @staticmethod
