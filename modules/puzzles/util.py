@@ -1,4 +1,5 @@
 from functools import lru_cache
+from collections import Counter
 
 from modules.puzzles.model import Building, ArtWork
 
@@ -43,3 +44,28 @@ def building_by_number(number):
 @lru_cache()
 def location_by_length(length):
     return [l for l in locations() if len(l.name) == int(length)]
+
+
+@lru_cache()
+def locations_containing_symbols(symbols):
+    # Transform symbol list to dict, counting the occurences of all symbols
+    s_dict = Counter(symbols.lower())
+
+    ls = locations()
+    for symbol in s_dict:
+        ls = [l for l in ls if l.name.lower().count(symbol) >= s_dict[symbol]]
+
+    return remove_duplicate_locations(ls)
+
+
+@lru_cache()
+def remove_duplicate_locations(locations):
+    results = []
+    storedLocations = []
+    for l in locations:
+        # Normalize name by removing spaces and putting it in lowercase
+        normalizedL = l.name.replace(' ', '').lower()
+        if normalizedL not in storedLocations:
+            results.append(l)
+            storedLocations.append(normalizedL)
+    return results
