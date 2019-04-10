@@ -70,11 +70,13 @@ class TelegramModuleMeta(type):
     @staticmethod
     def get_help_text(func):
         argspec = inspect.getfullargspec(func).args[1:]
-        funcspec = '/%s %s\n' % (func.__name__,
-                                 ' '.join(['<%s>' % arg for arg in argspec]))
+        varargs = inspect.getfullargspec(func).varargs
+        funcspec = '/%s %s' % (func.__name__,
+                               ' '.join(['<%s>' % arg for arg in argspec]))
+        varspec = ' <*%s>\n' % varargs if varargs else '\n'
         helptext = func.__doc__.replace('\n', ' ').replace('\t', ' ')
         helptext = ' '.join([x for x in helptext.split() if x != ''])
-        return funcspec + helptext
+        return funcspec + varspec + helptext
 
 
 class TelegramModule(metaclass=TelegramModuleMeta):
