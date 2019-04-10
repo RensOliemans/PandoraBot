@@ -34,3 +34,11 @@ class Puzzles(TelegramModule):
         results = util.locations_containing_symbols(symbols)
         self.respond('Er zijn %i resultaten die de symbolen \'%s\' bevatten' % (len(results), symbols))
         self.respond(', '.join([x.name for x in results]))
+
+    @command
+    def locations_vararg(self, verplicht, *args):
+        """
+        Test voor varargs
+        """
+        for a in args:
+            self.respond(a)
