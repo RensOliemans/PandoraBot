@@ -81,7 +81,7 @@ class TelegramModuleMeta(type):
 
         funcspec = TelegramModuleMeta._build_funcspec(func, argspec)
         varspec = TelegramModuleMeta._build_varspec(varargs)
-        helptext = TelegramModuleMeta._build_helptext(func)
+        helptext = TelegramModuleMeta._build_helptext(func.__doc__ or '')
 
         return "{func} {varargs}\n{help}".format(func=funcspec,
                                                  varargs=varspec,
@@ -100,11 +100,9 @@ class TelegramModuleMeta(type):
         return varargstring
 
     @staticmethod
-    def _build_helptext(func):
-        if func.__doc__:
-            doc = func.__doc__.replace('\n', ' ').replace('\t', ' ')
-            return ' '.join([x for x in doc.split() if x != ''])
-        return ''
+    def _build_helptext(doc):
+        doc = doc.replace('\n', ' ').replace('\t', ' ')
+        return ' '.join([x for x in doc.split() if x != ''])
 
 
 class TelegramModule(metaclass=TelegramModuleMeta):
