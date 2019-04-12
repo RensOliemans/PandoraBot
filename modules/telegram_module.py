@@ -27,7 +27,8 @@ class TelegramModuleMeta(type):
             method = getattr(x, name)
             if hasattr(method, "is_command"):
                 def get_wrapper(func):
-                    argspec = inspect.getfullargspec(method).args
+                    complete_arg_spec = inspect.getfullargspec(method)
+                    argspec = complete_arg_spec.args
                     has_vararg = inspect.getfullargspec(method).varargs
 
                     if (argspec[0] != 'self'):
@@ -36,8 +37,13 @@ class TelegramModuleMeta(type):
                     argspec = argspec[1:]
 
                     def wrapper(bot, update, user_data=None, args=[]):
+                        amount_of_method_arguments = len(argspec)
+                        amount_of_given_arguments = len(args)
+                        not_enough_given_arguments = amount_of_method_arguments > amount_of_given_arguments
+                        too_many_given_arguments = amount_of_method_arguments < amount_of_given_arguments
+
                         ins = x(context=user_data, update=update, bot=bot)
-                        if len(argspec) > len(args) or len(argspec) < len(args) and not has_vararg:
+                        if (not_enough_given_arguments) or (too_many_given_arguments and not has_vararg):
                             logging.debug('Command called with invalid argument count')
                             bot.send_message(chat_id=update.message.chat_id,
                                              text='Ongeldig aantal argumenten.')
