@@ -61,12 +61,8 @@ class Words(TelegramModule):
         """
         Zet een aantal woorden om naar morse
         """
-        try:
-            self.respond('\n'.join([' '.join(CODE[i.upper()] for i in word)
-                                   for word in words]))
-        except KeyError as e:
-            self.respond('Character %s cannot be parsed to morse, only characters and digits can'
-                         % str(e))
+        self.respond('\n'.join([' '.join(CODE.get(i.upper(), '?') for i in word)
+                               for word in words]))
 
     @command
     def morse_to_text(self, *morse):
@@ -75,10 +71,7 @@ class Words(TelegramModule):
         om naar letters
         """
         words = self._determine_words(*morse)
-        try:
-            self.respond(' '.join(''.join(CODE_REVERSED[i] for i in word) for word in words))
-        except KeyError as e:
-            self.respond('Character %s is not valid morse' % str(e))
+        self.respond(' '.join(''.join(CODE_REVERSED.get(i, '?') for i in word) for word in words))
 
     def _determine_words(self, *morse):
         word_breaks = [i for i, x in enumerate(morse) if x == ';']
