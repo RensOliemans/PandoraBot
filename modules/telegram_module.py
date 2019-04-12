@@ -39,8 +39,8 @@ class TelegramModuleMeta(type):
                     def wrapper(bot, update, user_data=None, args=[]):
                         amount_of_method_arguments = len(argspec)
                         amount_of_given_arguments = len(args)
-                        not_enough_given_arguments = amount_of_method_arguments > amount_of_given_arguments
-                        too_many_given_arguments = amount_of_method_arguments < amount_of_given_arguments
+                        not_enough_given_arguments = amount_of_given_arguments < amount_of_method_arguments
+                        too_many_given_arguments = amount_of_given_arguments > amount_of_method_arguments
 
                         ins = x(context=user_data, update=update, bot=bot)
                         if (not_enough_given_arguments) or (too_many_given_arguments and not has_vararg):
