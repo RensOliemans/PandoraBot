@@ -75,14 +75,34 @@ class TelegramModuleMeta(type):
 
     @staticmethod
     def get_help_text(func):
-        argspec = inspect.getfullargspec(func).args[1:]
-        varargs = inspect.getfullargspec(func).varargs
-        funcspec = '/%s %s' % (func.__name__,
-                               ' '.join(['<%s>' % arg for arg in argspec]))
-        varspec = ' <*%s>\n' % varargs if varargs else '\n'
-        helptext = func.__doc__.replace('\n', ' ').replace('\t', ' ')
-        helptext = ' '.join([x for x in helptext.split() if x != ''])
-        return funcspec + varspec + helptext
+        fullargspec = inspect.getfullargspec(func)
+        argspec = fullargspec.args[1:]
+        varargs = fullargspec.varargs
+
+        funcspec = TelegramModuleMeta._build_funcspec(func, argspec)
+        varspec = TelegramModuleMeta._build_varspec(varargs)
+        helptext = TelegramModuleMeta._build_helptext(func)
+
+        return "{func} {varargs}\n{help}".format(func=funcspec,
+                                                 varargs=varspec,
+                                                 help=helptext)
+
+    @staticmethod
+    def _build_funcspec(func, argspec):
+        params = ' '.join(['<{arg}>'.format(arg=arg) for arg in argspec])
+        return '/{method} {params}'.format(method=func.__name__, params=params)
+
+    @staticmethod
+    def _build_varspec(varargs):
+        varargstring = ''
+        if varargs:
+            varargstring = '<*{vararg}>'.format(vararg=varargs)
+        return varargstring
+
+    @staticmethod
+    def _build_helptext(func):
+        doc = func.__doc__.replace('\n', ' ').replace('\t', ' ')
+        return ' '.join([x for x in doc.split() if x != ''])
 
 
 class TelegramModule(metaclass=TelegramModuleMeta):
