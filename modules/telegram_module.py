@@ -101,8 +101,10 @@ class TelegramModuleMeta(type):
 
     @staticmethod
     def _build_helptext(func):
-        doc = func.__doc__.replace('\n', ' ').replace('\t', ' ')
-        return ' '.join([x for x in doc.split() if x != ''])
+        if func.__doc__:
+            doc = func.__doc__.replace('\n', ' ').replace('\t', ' ')
+            return ' '.join([x for x in doc.split() if x != ''])
+        return ''
 
 
 class TelegramModule(metaclass=TelegramModuleMeta):
