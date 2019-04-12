@@ -1,6 +1,7 @@
 from modules.telegram_module import TelegramModule
 from modules.telegram_module import command
 from . import util
+from . import morse
 
 
 class Puzzles(TelegramModule):
@@ -52,3 +53,12 @@ class Puzzles(TelegramModule):
         results = util.buildings_containing_symbols(symbols)
         self.respond('Er zijn %i gebouwen die de symbolen \'%s\' bevatten' % (len(results), symbols))
         self.respond(', '.join([str(x) for x in results]))
+
+
+class Words(TelegramModule):
+    @command
+    def text_to_morse(self, *words):
+        """
+        Zet een aantal woorden om naar morse
+        """
+        return '\n'.join(' '.join(morse.CODE.get(i.upper() for i in word)) for word in words)
