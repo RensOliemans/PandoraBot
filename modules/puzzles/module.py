@@ -71,7 +71,7 @@ class Words(TelegramModule):
     @command
     def morse_to_text(self, *morse):
         """
-        Zet een aantal morse letters (onderbroken door spatie) en woorden (onderbroken door ;)
+        Zet een aantal morse letters (onderbroken door spatie) en woorden (onderbroken door ; )
         om naar letters
         """
         words = self._determine_words(*morse)
