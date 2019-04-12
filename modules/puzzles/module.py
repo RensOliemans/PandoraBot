@@ -1,7 +1,7 @@
 from modules.telegram_module import TelegramModule
 from modules.telegram_module import command
 from . import util
-from . import morse
+from .morse import CODE, CODE_REVERSED
 
 
 class Puzzles(TelegramModule):
@@ -61,4 +61,32 @@ class Words(TelegramModule):
         """
         Zet een aantal woorden om naar morse
         """
-        return '\n'.join(' '.join(morse.CODE.get(i.upper() for i in word)) for word in words)
+        try:
+            self.respond('\n'.join([' '.join(CODE[i.upper()] for i in word)
+                                   for word in words]))
+        except KeyError as e:
+            self.respond('Character %s cannot be parsed to morse, only characters and digits can'
+                         % str(e))
+
+    @command
+    def morse_to_text(self, *morse):
+        """
+        Zet een aantal morse letters (onderbroken door spatie) en woorden (onderbroken door ;)
+        om naar letters
+        """
+        words = self._determine_words(*morse)
+        try:
+            self.respond(' '.join(''.join(CODE_REVERSED[i] for i in word) for word in words))
+        except KeyError as e:
+            self.respond('Character %s is not valid morse' % str(e))
+
+    def _determine_words(self, *morse):
+        word_breaks = [i for i, x in enumerate(morse) if x == ';']
+        start_index = 0
+        words = list()
+
+        for _, end_index in enumerate(word_breaks):
+            words.append(morse[start_index:end_index])
+            start_index = end_index + 1
+        words.append(morse[start_index:])  # Don't forget the last word
+        return words
